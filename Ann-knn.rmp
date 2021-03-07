@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?><process version="9.7.002">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" compatibility="9.7.002" expanded="true" name="Process">
+    <parameter key="logverbosity" value="init"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="never"/>
+    <parameter key="notification_email" value=""/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true">
+      <operator activated="true" class="read_csv" compatibility="9.7.002" expanded="true" height="68" name="Read CSV" width="90" x="179" y="34">
+        <parameter key="csv_file" value="C:\Users\user\Downloads\StudentperformanceDataset V1.01.csv"/>
+        <parameter key="column_separators" value=","/>
+        <parameter key="trim_lines" value="false"/>
+        <parameter key="use_quotes" value="true"/>
+        <parameter key="quotes_character" value="&quot;"/>
+        <parameter key="escape_character" value="\"/>
+        <parameter key="skip_comments" value="true"/>
+        <parameter key="comment_characters" value="#"/>
+        <parameter key="starting_row" value="1"/>
+        <parameter key="parse_numbers" value="true"/>
+        <parameter key="decimal_character" value="."/>
+        <parameter key="grouped_digits" value="false"/>
+        <parameter key="grouping_character" value=","/>
+        <parameter key="infinity_representation" value=""/>
+        <parameter key="date_format" value=""/>
+        <parameter key="first_row_as_names" value="true"/>
+        <list key="annotations"/>
+        <parameter key="time_zone" value="SYSTEM"/>
+        <parameter key="locale" value="English (United States)"/>
+        <parameter key="encoding" value="windows-1252"/>
+        <parameter key="read_all_values_as_polynominal" value="false"/>
+        <list key="data_set_meta_data_information">
+          <parameter key="0" value="sex.true.polynominal.attribute"/>
+          <parameter key="1" value="age.true.polynominal.attribute"/>
+          <parameter key="2" value="living_with_parent.true.polynominal.attribute"/>
+          <parameter key="3" value="home_internet.true.polynominal.attribute"/>
+          <parameter key="4" value="study_time.true.polynominal.attribute"/>
+          <parameter key="5" value="subjects_failures.true.polynominal.attribute"/>
+        </list>
+        <parameter key="read_not_matching_values_as_missings" value="true"/>
+        <parameter key="datamanagement" value="double_array"/>
+        <parameter key="data_management" value="auto"/>
+      </operator>
+      <operator activated="true" class="filter_examples" compatibility="9.7.002" expanded="true" height="103" name="Filter Examples - Remove Empty Row" width="90" x="246" y="187">
+        <parameter key="parameter_string" value="age&lt;=106"/>
+        <parameter key="parameter_expression" value=""/>
+        <parameter key="condition_class" value="custom_filters"/>
+        <parameter key="invert_filter" value="false"/>
+        <list key="filters_list">
+          <parameter key="filters_entry_key" value="sex.is_not_missing."/>
+          <parameter key="filters_entry_key" value="age.is_not_missing."/>
+          <parameter key="filters_entry_key" value="living_with_parent.is_not_missing."/>
+          <parameter key="filters_entry_key" value="home_internet.is_not_missing."/>
+          <parameter key="filters_entry_key" value="study_time.is_not_missing."/>
+          <parameter key="filters_entry_key" value="subjects_failures.is_not_missing."/>
+        </list>
+        <parameter key="filters_logic_and" value="true"/>
+        <parameter key="filters_check_metadata" value="true"/>
+      </operator>
+      <operator activated="true" class="remove_duplicates" compatibility="9.7.002" expanded="true" height="103" name="Remove Duplicates" width="90" x="313" y="34">
+        <parameter key="attribute_filter_type" value="all"/>
+        <parameter key="attribute" value=""/>
+        <parameter key="attributes" value=""/>
+        <parameter key="use_except_expression" value="false"/>
+        <parameter key="value_type" value="attribute_value"/>
+        <parameter key="use_value_type_exception" value="false"/>
+        <parameter key="except_value_type" value="time"/>
+        <parameter key="block_type" value="attribute_block"/>
+        <parameter key="use_block_type_exception" value="false"/>
+        <parameter key="except_block_type" value="value_matrix_row_start"/>
+        <parameter key="invert_selection" value="false"/>
+        <parameter key="include_special_attributes" value="false"/>
+        <parameter key="treat_missing_values_as_duplicates" value="false"/>
+      </operator>
+      <operator activated="true" class="replace" compatibility="9.7.002" expanded="true" height="82" name="Replace - na as missing" width="90" x="447" y="34">
+        <parameter key="attribute_filter_type" value="all"/>
+        <parameter key="attribute" value="age"/>
+        <parameter key="attributes" value="|restecg|trestbps"/>
+        <parameter key="use_except_expression" value="false"/>
+        <parameter key="value_type" value="nominal"/>
+        <parameter key="use_value_type_exception" value="false"/>
+        <parameter key="except_value_type" value="file_path"/>
+        <parameter key="block_type" value="single_value"/>
+        <parameter key="use_block_type_exception" value="false"/>
+        <parameter key="except_block_type" value="single_value"/>
+        <parameter key="numeric_condition" value="[999-10000]"/>
+        <parameter key="invert_selection" value="false"/>
+        <parameter key="include_special_attributes" value="false"/>
+        <parameter key="replace_what" value="na"/>
+      </operator>
+      <operator activated="true" class="replace" compatibility="9.7.002" expanded="true" height="82" name="Replace - re-level age" width="90" x="581" y="34">
+        <parameter key="attribute_filter_type" value="single"/>
+        <parameter key="attribute" value="age"/>
+        <parameter key="attributes" value="|restecg|trestbps"/>
+        <parameter key="use_except_expression" value="false"/>
+        <parameter key="value_type" value="nominal"/>
+        <parameter key="use_value_type_exception" value="false"/>
+        <parameter key="except_value_type" value="file_path"/>
+        <parameter key="block_type" value="single_value"/>
+        <parameter key="use_block_type_exception" value="false"/>
+        <parameter key="except_block_type" value="single_value"/>
+        <parameter key="numeric_condition" value="[999-10000]"/>
+        <parameter key="invert_selection" value="false"/>
+        <parameter key="include_special_attributes" value="false"/>
+        <parameter key="replace_what" value="20"/>
+        <parameter key="replace_by" value="17"/>
+      </operator>
+      <operator activated="true" class="replace" compatibility="9.7.002" expanded="true" height="82" name="Replace - re-level age (2)" width="90" x="581" y="136">
+        <parameter key="attribute_filter_type" value="single"/>
+        <parameter key="attribute" value="age"/>
+        <parameter key="attributes" value="|restecg|trestbps"/>
+        <parameter key="use_except_expression" value="false"/>
+        <parameter key="value_type" value="nominal"/>
+        <parameter key="use_value_type_exception" value="false"/>
+        <parameter key="except_value_type" value="file_path"/>
+        <parameter key="block_type" value="single_value"/>
+        <parameter key="use_block_type_exception" value="false"/>
+        <parameter key="except_block_type" value="single_value"/>
+        <parameter key="numeric_condition" value="[999-10000]"/>
+        <parameter key="invert_selection" value="false"/>
+        <parameter key="include_special_attributes" value="false"/>
+        <parameter key="replace_what" value="22"/>
+        <parameter key="replace_by" value="17"/>
+      </operator>
+      <operator activated="true" class="replace_missing_values" compatibility="9.7.002" expanded="true" height="103" name="Replace Missing Values - home_internet" width="90" x="715" y="34">
+        <parameter key="return_preprocessing_model" value="false"/>
+        <parameter key="create_view" value="false"/>
+        <parameter key="attribute_filter_type" value="single"/>
+        <parameter key="attribute" value="home_internet"/>
+        <parameter key="attributes" value=""/>
+        <parameter key="use_except_expression" value="false"/>
+        <parameter key="value_type" value="attribute_value"/>
+        <parameter key="use_value_type_exception" value="false"/>
+        <parameter key="except_value_type" value="time"/>
+        <parameter key="block_type" value="attribute_block"/>
+        <parameter key="use_block_type_exception" value="false"/>
+        <parameter key="except_block_type" value="value_matrix_row_start"/>
+        <parameter key="invert_selection" value="false"/>
+        <parameter key="include_special_attributes" value="false"/>
+        <parameter key="default" value="value"/>
+        <list key="columns">
+          <parameter key="subjects_failures" value="value"/>
+          <parameter key="home_internet" value="value"/>
+          <parameter key="age" value="value"/>
+          <parameter key="living_with_parent" value="value"/>
+          <parameter key="study_time" value="value"/>
+          <parameter key="sex" value="value"/>
+        </list>
+        <parameter key="replenishment_value" value="yes"/>
+      </operator>
+      <operator activated="true" class="replace_missing_values" compatibility="9.7.002" expanded="true" height="103" name="Replace Missing Values - sex" width="90" x="715" y="187">
+        <parameter key="return_preprocessing_model" value="false"/>
+        <parameter key="create_view" value="false"/>
+        <parameter key="attribute_filter_type" value="single"/>
+        <parameter key="attribute" value="sex"/>
+        <parameter key="attributes" value=""/>
+        <parameter key="use_except_expression" value="false"/>
+        <parameter key="value_type" value="attribute_value"/>
+        <parameter key="use_value_type_exception" value="false"/>
+        <parameter key="except_value_type" value="time"/>
+        <parameter key="block_type" value="attribute_block"/>
+        <parameter key="use_block_type_exception" value="false"/>
+        <parameter key="except_block_type" value="value_matrix_row_start"/>
+        <parameter key="invert_selection" value="false"/>
+        <parameter key="include_special_attributes" value="false"/>
+        <parameter key="default" value="value"/>
+        <list key="columns">
+          <parameter key="subjects_failures" value="value"/>
+          <parameter key="home_internet" value="value"/>
+          <parameter key="age" value="value"/>
+          <parameter key="living_with_parent" value="value"/>
+          <parameter key="study_time" value="value"/>
+          <parameter key="sex" value="value"/>
+        </list>
+        <parameter key="replenishment_value" value="F"/>
+      </operator>
+      <operator activated="true" class="replace_missing_values" compatibility="9.7.002" expanded="true" height="103" name="Replace Missing Values - age" width="90" x="715" y="340">
+        <parameter key="return_preprocessing_model" value="false"/>
+        <parameter key="create_view" value="false"/>
+        <parameter key="attribute_filter_type" value="single"/>
+        <parameter key="attribute" value="age"/>
+        <parameter key="attributes" value=""/>
+        <parameter key="use_except_expression" value="false"/>
+        <parameter key="value_type" value="attribute_value"/>
+        <parameter key="use_value_type_exception" value="false"/>
+        <parameter key="except_value_type" value="time"/>
+        <parameter key="block_type" value="attribute_block"/>
+        <parameter key="use_block_type_exception" value="false"/>
+        <parameter key="except_block_type" value="value_matrix_row_start"/>
+        <parameter key="invert_selection" value="false"/>
+        <parameter key="include_special_attributes" value="false"/>
+        <parameter key="default" value="value"/>
+        <list key="columns">
+          <parameter key="subjects_failures" value="value"/>
+          <parameter key="home_internet" value="value"/>
+          <parameter key="age" value="value"/>
+          <parameter key="living_with_parent" value="value"/>
+          <parameter key="study_time" value="value"/>
+          <parameter key="sex" value="value"/>
+        </list>
+        <parameter key="replenishment_value" value="17"/>
+      </operator>
+      <operator activated="true" class="replace_missing_values" compatibility="9.7.002" expanded="true" height="103" name="Replace Missing Values - study_time" width="90" x="849" y="442">
+        <parameter key="return_preprocessing_model" value="false"/>
+        <parameter key="create_view" value="false"/>
+        <parameter key="attribute_filter_type" value="single"/>
+        <parameter key="attribute" value="study_time"/>
+        <parameter key="attributes" value=""/>
+        <parameter key="use_except_expression" value="false"/>
+        <parameter key="value_type" value="attribute_value"/>
+        <parameter key="use_value_type_exception" value="false"/>
+        <parameter key="except_value_type" value="time"/>
+        <parameter key="block_type" value="attribute_block"/>
+        <parameter key="use_block_type_exception" value="false"/>
+        <parameter key="except_block_type" value="value_matrix_row_start"/>
+        <parameter key="invert_selection" value="false"/>
+        <parameter key="include_special_attributes" value="false"/>
+        <parameter key="default" value="value"/>
+        <list key="columns">
+          <parameter key="subjects_failures" value="value"/>
+          <parameter key="home_internet" value="value"/>
+          <parameter key="age" value="value"/>
+          <parameter key="living_with_parent" value="value"/>
+          <parameter key="study_time" value="value"/>
+          <parameter key="sex" value="value"/>
+        </list>
+        <parameter key="replenishment_value" value="2"/>
+      </operator>
+      <operator activated="true" class="replace_missing_values" compatibility="9.7.002" expanded="true" height="103" name="Replace Missing Values - subject_failures" width="90" x="849" y="289">
+        <parameter key="return_preprocessing_model" value="false"/>
+        <parameter key="create_view" value="false"/>
+        <parameter key="attribute_filter_type" value="single"/>
+        <parameter key="attribute" value="subjects_failures"/>
+        <parameter key="attributes" value=""/>
+        <parameter key="use_except_expression" value="false"/>
+        <parameter key="value_type" value="attribute_value"/>
+        <parameter key="use_value_type_exception" value="false"/>
+        <parameter key="except_value_type" value="time"/>
+        <parameter key="block_type" value="attribute_block"/>
+        <parameter key="use_block_type_exception" value="false"/>
+        <parameter key="except_block_type" value="value_matrix_row_start"/>
+        <parameter key="invert_selection" value="false"/>
+        <parameter key="include_special_attributes" value="false"/>
+        <parameter key="default" value="value"/>
+        <list key="columns">
+          <parameter key="subjects_failures" value="value"/>
+          <parameter key="home_internet" value="value"/>
+          <parameter key="age" value="value"/>
+          <parameter key="living_with_parent" value="value"/>
+          <parameter key="study_time" value="value"/>
+          <parameter key="sex" value="value"/>
+        </list>
+        <parameter key="replenishment_value" value="0"/>
+      </operator>
+      <operator activated="true" class="replace_missing_values" compatibility="9.7.002" expanded="true" height="103" name="Replace Missing Values - living_with_parent" width="90" x="849" y="136">
+        <parameter key="return_preprocessing_model" value="false"/>
+        <parameter key="create_view" value="false"/>
+        <parameter key="attribute_filter_type" value="single"/>
+        <parameter key="attribute" value="living_with_parent"/>
+        <parameter key="attributes" value=""/>
+        <parameter key="use_except_expression" value="false"/>
+        <parameter key="value_type" value="attribute_value"/>
+        <parameter key="use_value_type_exception" value="false"/>
+        <parameter key="except_value_type" value="time"/>
+        <parameter key="block_type" value="attribute_block"/>
+        <parameter key="use_block_type_exception" value="false"/>
+        <parameter key="except_block_type" value="value_matrix_row_start"/>
+        <parameter key="invert_selection" value="false"/>
+        <parameter key="include_special_attributes" value="false"/>
+        <parameter key="default" value="value"/>
+        <list key="columns">
+          <parameter key="subjects_failures" value="value"/>
+          <parameter key="home_internet" value="value"/>
+          <parameter key="age" value="value"/>
+          <parameter key="living_with_parent" value="value"/>
+          <parameter key="study_time" value="value"/>
+          <parameter key="sex" value="value"/>
+        </list>
+        <parameter key="replenishment_value" value="Y"/>
+      </operator>
+      <operator activated="true" class="set_role" compatibility="9.7.002" expanded="true" height="82" name="Set Role" width="90" x="849" y="34">
+        <parameter key="attribute_name" value="subjects_failures"/>
+        <parameter key="target_role" value="label"/>
+        <list key="set_additional_roles"/>
+      </operator>
+      <operator activated="true" class="split_data" compatibility="9.7.002" expanded="true" height="103" name="Split Data" width="90" x="983" y="34">
+        <enumeration key="partitions">
+          <parameter key="ratio" value="0.8"/>
+          <parameter key="ratio" value="0.2"/>
+        </enumeration>
+        <parameter key="sampling_type" value="automatic"/>
+        <parameter key="use_local_random_seed" value="false"/>
+        <parameter key="local_random_seed" value="1992"/>
+      </operator>
+      <operator activated="true" class="k_nn" compatibility="9.7.002" expanded="true" height="82" name="k-NN" width="90" x="1117" y="34">
+        <parameter key="k" value="11"/>
+        <parameter key="weighted_vote" value="true"/>
+        <parameter key="measure_types" value="NominalMeasures"/>
+        <parameter key="mixed_measure" value="MixedEuclideanDistance"/>
+        <parameter key="nominal_measure" value="JaccardSimilarity"/>
+        <parameter key="numerical_measure" value="EuclideanDistance"/>
+        <parameter key="divergence" value="GeneralizedIDivergence"/>
+        <parameter key="kernel_type" value="radial"/>
+        <parameter key="kernel_gamma" value="1.0"/>
+        <parameter key="kernel_sigma1" value="1.0"/>
+        <parameter key="kernel_sigma2" value="0.0"/>
+        <parameter key="kernel_sigma3" value="2.0"/>
+        <parameter key="kernel_degree" value="3.0"/>
+        <parameter key="kernel_shift" value="1.0"/>
+        <parameter key="kernel_a" value="1.0"/>
+        <parameter key="kernel_b" value="0.0"/>
+      </operator>
+      <operator activated="true" class="apply_model" compatibility="9.7.002" expanded="true" height="82" name="Apply Model" width="90" x="1184" y="238">
+        <list key="application_parameters"/>
+        <parameter key="create_view" value="false"/>
+      </operator>
+      <operator activated="true" class="performance_classification" compatibility="9.7.002" expanded="true" height="82" name="Performance" width="90" x="1251" y="34">
+        <parameter key="main_criterion" value="first"/>
+        <parameter key="accuracy" value="true"/>
+        <parameter key="classification_error" value="false"/>
+        <parameter key="kappa" value="false"/>
+        <parameter key="weighted_mean_recall" value="false"/>
+        <parameter key="weighted_mean_precision" value="false"/>
+        <parameter key="spearman_rho" value="false"/>
+        <parameter key="kendall_tau" value="false"/>
+        <parameter key="absolute_error" value="false"/>
+        <parameter key="relative_error" value="false"/>
+        <parameter key="relative_error_lenient" value="false"/>
+        <parameter key="relative_error_strict" value="false"/>
+        <parameter key="normalized_absolute_error" value="false"/>
+        <parameter key="root_mean_squared_error" value="false"/>
+        <parameter key="root_relative_squared_error" value="false"/>
+        <parameter key="squared_error" value="false"/>
+        <parameter key="correlation" value="false"/>
+        <parameter key="squared_correlation" value="false"/>
+        <parameter key="cross-entropy" value="false"/>
+        <parameter key="margin" value="false"/>
+        <parameter key="soft_margin_loss" value="false"/>
+        <parameter key="logistic_loss" value="false"/>
+        <parameter key="skip_undefined_labels" value="true"/>
+        <parameter key="use_example_weights" value="true"/>
+        <list key="class_weights"/>
+      </operator>
+      <connect from_op="Read CSV" from_port="output" to_op="Filter Examples - Remove Empty Row" to_port="example set input"/>
+      <connect from_op="Filter Examples - Remove Empty Row" from_port="example set output" to_op="Remove Duplicates" to_port="example set input"/>
+      <connect from_op="Remove Duplicates" from_port="example set output" to_op="Replace - na as missing" to_port="example set input"/>
+      <connect from_op="Replace - na as missing" from_port="example set output" to_op="Replace - re-level age" to_port="example set input"/>
+      <connect from_op="Replace - re-level age" from_port="example set output" to_op="Replace - re-level age (2)" to_port="example set input"/>
+      <connect from_op="Replace - re-level age (2)" from_port="example set output" to_op="Replace Missing Values - home_internet" to_port="example set input"/>
+      <connect from_op="Replace Missing Values - home_internet" from_port="example set output" to_op="Replace Missing Values - sex" to_port="example set input"/>
+      <connect from_op="Replace Missing Values - sex" from_port="example set output" to_op="Replace Missing Values - age" to_port="example set input"/>
+      <connect from_op="Replace Missing Values - age" from_port="example set output" to_op="Replace Missing Values - study_time" to_port="example set input"/>
+      <connect from_op="Replace Missing Values - study_time" from_port="example set output" to_op="Replace Missing Values - subject_failures" to_port="example set input"/>
+      <connect from_op="Replace Missing Values - subject_failures" from_port="example set output" to_op="Replace Missing Values - living_with_parent" to_port="example set input"/>
+      <connect from_op="Replace Missing Values - living_with_parent" from_port="example set output" to_op="Set Role" to_port="example set input"/>
+      <connect from_op="Set Role" from_port="example set output" to_op="Split Data" to_port="example set"/>
+      <connect from_op="Split Data" from_port="partition 1" to_op="k-NN" to_port="training set"/>
+      <connect from_op="Split Data" from_port="partition 2" to_op="Apply Model" to_port="unlabelled data"/>
+      <connect from_op="k-NN" from_port="model" to_op="Apply Model" to_port="model"/>
+      <connect from_op="Apply Model" from_port="labelled data" to_op="Performance" to_port="labelled data"/>
+      <connect from_op="Apply Model" from_port="model" to_port="result 2"/>
+      <connect from_op="Performance" from_port="performance" to_port="result 1"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+      <portSpacing port="sink_result 3" spacing="0"/>
+    </process>
+  </operator>
+</process>
